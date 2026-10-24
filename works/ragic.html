@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>多系統帳號、權限與資產關聯管理系統｜陳家榮</title>
+<meta name="description" content="以 Ragic 建立人員、帳號、群組、NAS 權限、設備與維護資源的集中管理架構。">
+<meta property="og:title" content="多系統帳號、權限與資產關聯管理系統">
+<meta property="og:description" content="以 Ragic 建立人員、帳號、群組、NAS 權限、設備與維護資源的集中管理架構。">
+<meta property="og:image" content="https://coloplay1.github.io/portfolio/img/ragic-cover.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<nav class="bar"><div class="wrap">
+  <a class="back" href="../">← 作品集</a>
+  <a class="pdf" href="../ragic-account-system.pdf" download>下載 PDF</a>
+</div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eb">IT 系統管理</div>
+    <h1>多系統帳號、權限與資產關聯管理系統</h1>
+    <p class="lede">以 Ragic 建立人員、帳號、群組、NAS 權限、設備與維護資源的集中管理架構。</p>
+    <p class="who">陳家榮｜IT維運與系統管理</p>
+    <div class="tags"><span style="background:var(--teal-d)">PORTFOLIO</span><span style="background:var(--blue)">RAGIC</span><span style="background:var(--orange)">ISO 27001 導向</span></div>
+    <p style="margin-top:28px;color:#cfdbe7;font-size:14px">核心價值</p>
+    <p style="font-size:22px;letter-spacing:.06em">可追溯 · 可交接 · 可盤點 · 可稽核</p>
+    <div class="toc">
+      <a href="#s2">製作事由</a><a href="#s3">關聯架構</a><a href="#s4">系統與設備</a><a href="#s5">人員彙總</a><a href="#s6">NAS 權限</a><a href="#s7">成員關聯</a><a href="#s8">Ragic 設計</a><a href="#s9">稽核應用</a><a href="#s10">擴充藍圖</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="sec" id="s2">
+    <div class="sh"><span class="n">02</span><h2>問題不是「沒有清冊」，而是資料彼此沒有關係</h2></div>
+    <p class="sub">從分散帳號清冊，轉為可追溯的關聯資料模型。</p>
+    <div class="grid g3">
+      <div class="card soft"><div class="k"><i>01</i><h3>帳號分散</h3></div><p>AD、三台 NAS、MailCloud 各自管理，命名與狀態標準不一致。</p>
+        <div class="fix"><b>對應做法</b>以獨立的系統帳號清冊 ACC 統一記錄各平台帳號，區分個人、共用、管理員與儀器帳號。</div></div>
+      <div class="card soft"><div class="k"><i>02</i><h3>離職風險</h3></div><p>人員離職時，難以一次確認所有帳號、群組與資料夾權限。</p>
+        <div class="fix"><b>對應做法</b>人員頁彙總持有帳號與所屬群組，NAS 權限一條規則一筆紀錄，可逐筆確認回收。</div></div>
+      <div class="card soft"><div class="k"><i>03</i><h3>交接困難</h3></div><p>系統、承載設備、維護廠商與窗口資訊分散，仰賴個人記憶。</p>
+        <div class="fix"><b>對應做法</b>系統主檔串接設備、廠商與聯絡窗口，異常或交接時可直接找到負責對象。</div></div>
+    </div>
+    <div class="dark" style="margin-top:20px">
+      <h3>建置目標</h3>
+      <ul style="grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));column-gap:28px">
+        <li>以人員為核心，彙總跨系統持有帳號與主要公司信箱</li>
+        <li>以獨立帳號主檔管理個人、共用、管理員與儀器帳號</li>
+        <li>將 NAS 資料夾與權限規則拆分，保留一條規則一筆紀錄</li>
+        <li>串接系統、硬體、廠商與聯絡窗口，支援維護與交接</li>
+        <li>保留狀態、責任人、盤點日期與來源，形成 ISMS 稽核證據</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <div class="sh"><span class="n">03</span><h2>十張表單的整體關聯架構</h2></div>
+    <p class="sub">連結欄位指向被引用的主檔，主檔再以子表反向彙總。</p>
+    <div class="diagram"><svg viewBox="0 0 1080 470" role="img" aria-label="十張表單的關聯架構，箭頭由連結欄位指向被引用的主檔"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" class="dl"/></marker></defs><g fill="none" class="arrows" stroke-width="2" marker-end="url(#ah)"><path d="M300 58H224"/><path d="M500 58H576"/><path d="M780 58H856"/><path d="M780 100H820V243H856"/><path d="M400 200V120"/><path d="M500 243H576"/><path d="M680 200V120"/><path d="M960 370V290"/><path d="M300 400H260V100H296"/><path d="M500 430H680V290"/><path d="M300 430H120V290"/></g><g font-size="13" class="dl"><text x="262" y="48" text-anchor="middle">持有人</text><text x="540" y="48" text-anchor="middle">來源系統</text><text x="820" y="48" text-anchor="middle">承載設備</text><text x="828" y="170">維護</text><text x="828" y="187">廠商</text><text x="410" y="166">帳號</text><text x="540" y="233" text-anchor="middle">群組</text><text x="690" y="166">來源系統</text><text x="970" y="336">所屬廠商</text><text x="590" y="421">授權群組</text><text x="160" y="421">套用資料夾</text><text x="268" y="236" writing-mode="tb">授權帳號</text></g><g font-size="18"><rect class="dbox" x="20" y="30" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="36" y="58">人員帳號總覽</text><text class="dd" x="36" y="80" font-size="12.5">員工、狀態、公司信箱</text><text class="dc" x="36" y="104" font-size="12.5">USR</text><rect class="dbox" x="300" y="30" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="316" y="58">系統帳號清冊</text><text class="dd" x="316" y="80" font-size="12.5">登入身分與責任歸屬</text><text class="dc" x="316" y="104" font-size="12.5">ACC</text><rect class="dbox" x="580" y="30" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="596" y="58">資訊系統主檔</text><text class="dd" x="596" y="80" font-size="12.5">服務與管理責任</text><text class="dc" x="596" y="104" font-size="12.5">SYS</text><rect class="dbox" x="860" y="30" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="876" y="58">硬體資產主檔</text><text class="dd" x="876" y="80" font-size="12.5">設備、IP、位置、規格</text><text class="dc" x="876" y="104" font-size="12.5">HW</text><rect class="dbox" x="20" y="200" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="36" y="228">NAS 資料夾主檔</text><text class="dd" x="36" y="250" font-size="12.5">路徑、所在 NAS、重要等級</text><text class="dc" x="36" y="274" font-size="12.5">FOLDER</text><rect class="dbox hl" x="300" y="200" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="316" y="228">群組成員關聯</text><text class="dd" x="316" y="250" font-size="12.5">一筆＝一個帳號加入一個群組</text><text class="dc" x="316" y="274" font-size="12.5">MEM</text><rect class="dbox" x="580" y="200" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="596" y="228">帳號群組清冊</text><text class="dd" x="596" y="250" font-size="12.5">來源、屬性與群組狀態</text><text class="dc" x="596" y="274" font-size="12.5">GRP</text><rect class="dbox" x="860" y="200" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="876" y="228">資訊系統廠商</text><text class="dd" x="876" y="250" font-size="12.5">服務廠商與合約關係</text><text class="dc" x="876" y="274" font-size="12.5">VEN</text><rect class="dbox hl" x="300" y="370" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="316" y="398">NAS 權限清冊</text><text class="dd" x="316" y="420" font-size="12.5">一筆＝一條授權規則</text><text class="dc" x="316" y="444" font-size="12.5">PERM</text><rect class="dbox" x="860" y="370" width="200" height="86" rx="10" stroke-width="2"/><text class="dt" x="876" y="398">廠商聯絡人</text><text class="dd" x="876" y="420" font-size="12.5">技術、業務、緊急窗口</text><text class="dc" x="876" y="444" font-size="12.5">VCT</text></g></svg></div>
+    <p class="swipe">← 左右滑動查看完整圖 →</p>
+    <div class="split" style="margin-top:18px">
+      <h3>箭頭的意義</h3>
+      <p>連結欄位 → 被引用的主檔，與<a href="isms.html#s2">《ISMS 與帳號權限管理整合實例》</a>採相同畫法：例如 ACC 的「所屬人員」指向 USR，MEM 同時指向 ACC 與 GRP。主檔再以子表反向彙總，因此仍可從人員一路查到帳號、群組、資料夾權限、系統、設備與廠商。MEM 以「ACC｜GRP」作唯一關聯鍵，讓一個帳號可加入多個群組，同一群組也可包含多個帳號；FOLDER 另以「所在 NAS」連結 SYS，圖中省略以保持清晰。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s4">
+    <div class="sh"><span class="n">04</span><h2>系統、設備、廠商與聯絡窗口</h2></div>
+    <p class="sub">從服務定位一路追溯至承載資產與維護責任。</p>
+    <figure class="shot"><a href="img/sys.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/sys.png" alt="資訊系統主檔清單畫面" loading="lazy"></a><figcaption>資訊系統主檔｜系統清單（實際畫面，主機名稱與負責人已遮蔽）・點圖可放大</figcaption></figure>
+    <div class="card" style="margin-top:18px">
+      <h3>連結設計</h3>
+      <div class="links">
+        <div class="lk"><span class="pill">SYS → HW</span><span>資訊系統主檔的承載設備子表</span><span class="muted small">一項系統可連結主機、備援機或虛擬機；設備主檔保留 IP、位置與規格。</span></div>
+        <div class="lk"><span class="pill">SYS → VEN</span><span>資訊系統的維護廠商欄位</span><span class="muted small">系統異常或合約交接時，可直接找到服務提供者。</span></div>
+        <div class="lk"><span class="pill">VCT → VEN</span><span>廠商聯絡人的所屬廠商</span><span class="muted small">同一廠商可有多位技術、業務或緊急聯絡窗口。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="sh"><span class="n">05</span><h2>人員、帳號與所屬群組彙總</h2></div>
+    <p class="sub">人員頁同時呈現持有帳號，以及各帳號所屬的群組關係。</p>
+    <div class="grid">
+      <figure class="shot"><a href="img/usr_acc.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/usr_acc.png" alt="人員明細的持有系統帳號子表" loading="lazy"></a><figcaption>人員明細｜第一個子表：持有系統帳號（登入帳號與系統代號已遮蔽）</figcaption></figure>
+      <figure class="shot"><a href="img/usr_mem.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/usr_mem.png" alt="人員明細的所屬帳號群組子表" loading="lazy"></a><figcaption>人員明細｜第二個子表：所屬帳號群組，由 MEM 帶回（編號與群組名稱已遮蔽）</figcaption></figure>
+    </div>
+    <div class="chain" style="margin-top:22px">
+      <div class="node"><b>人員主檔</b><span>姓名、部門、人員狀態</span><code>USR</code></div>
+      <div class="arr">1 對多</div>
+      <div class="node"><b>系統帳號</b><span>AD、NAS、MailCloud 身分</span><code>ACC</code></div>
+      <div class="arr">1 對多</div>
+      <div class="node"><b>成員關聯</b><span>ACC｜GRP 唯一關聯鍵</span><code>MEM</code></div>
+      <div class="arr">多對 1</div>
+      <div class="node"><b>帳號群組</b><span>來源系統與群組名稱</span><code>GRP</code></div>
+    </div>
+    <p class="hint">帳號連結人員後，人員頁的第一個子表反向彙總全部 ACC；MEM 再把每個 ACC 的群組成員關係帶回人員頁。共用或服務帳號不必假造人員，只需保留責任單位與維護人。子表中的「是否為特權帳號」「隨人員離職停權」欄位，讓離職時可一次確認須處理的帳號。</p>
+  </section>
+
+  <section class="sec" id="s6">
+    <div class="sh"><span class="n">06</span><h2>NAS 資料夾與權限規則</h2></div>
+    <p class="sub">拆開「目錄是什麼」與「誰擁有什麼權限」。</p>
+    <div class="grid g2" style="align-items:start">
+      <figure class="shot"><a href="img/perm.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/perm.png" alt="NAS 權限清冊單筆授權規則" loading="lazy"></a><figcaption>NAS 權限清冊｜單筆授權規則（路徑與帳號資訊已遮蔽）・點圖可放大</figcaption></figure>
+      <div class="grid">
+        <h3 style="margin:0">一條規則一筆紀錄</h3>
+        <div class="scroll"><table class="kv">
+          <thead><tr><th>資料物件</th><th>記錄內容</th></tr></thead>
+          <tbody>
+            <tr><td>資料夾 FOLDER</td><td>完整路徑、所在 NAS、重要等級</td></tr>
+            <tr><td>權限規則 PERM</td><td>讀寫／唯讀／自訂／拒絕</td></tr>
+            <tr><td>授權對象</td><td>帳號 ACC 或群組 GRP，或系統內建對象</td></tr>
+            <tr><td>最終歸屬</td><td>經 ACC 帶出權限所屬人員 USR</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout">一個資料夾可有多條規則；每條規則只對應一個授權對象。<b>拒絕權限必須獨立保存</b>，避免被讀寫權限覆蓋。</div>
+        <p class="hint" style="margin:0">everyone、owner 等系統內建對象不連結 ACC／GRP，另以「系統內建對象」標記；非標準權限組合記為「自訂」。本表記錄權限狀態，不取代 NAS 實際 ACL 設定。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="s7">
+    <div class="sh"><span class="n">07</span><h2>帳號群組成員關聯表</h2></div>
+    <p class="sub">以獨立 MEM 紀錄解開帳號與群組的多對多關係。</p>
+    <div class="grid g2" style="align-items:start">
+      <figure class="shot"><a href="img/mem.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/mem.png" alt="帳號群組成員關聯明細" loading="lazy"></a><figcaption>MEM 明細｜帳號、群組與一致性（編號已遮蔽）・點圖可放大</figcaption></figure>
+      <div class="grid">
+        <h3 style="margin:0">三種狀態各自獨立</h3>
+        <div class="scroll"><table class="kv">
+          <thead><tr><th>狀態</th><th>描述的對象</th><th>範例</th></tr></thead>
+          <tbody>
+            <tr><td>人員狀態</td><td>人是否在職</td><td>離職</td></tr>
+            <tr><td>帳號狀態</td><td>ACC 是否啟用</td><td>已停用</td></tr>
+            <tr><td>成員狀態</td><td>這條群組關係是否有效</td><td>有效</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout">以左圖這筆紀錄為例：人員已離職、帳號已停用，但群組成員關係仍標為有效。三種狀態分開記錄，盤點時才看得出哪些群組關係需要清理。</div>
+        <p class="hint" style="margin:0">「系統一致性」比較 ACC 與 GRP 的來源系統編號，協助攔截跨系統誤連。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="s8">
+    <div class="sh"><span class="n">08</span><h2>Ragic 連結與自動帶出設計</h2></div>
+    <p class="sub">連結欄位負責選對主檔；載入欄位負責顯示主檔資訊。</p>
+    <div class="scroll"><table>
+      <thead><tr><th>表單</th><th>主連結欄位</th><th>連結目標</th><th>自動帶出</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>人員總覽</td><td>主要郵件帳號</td><td>系統帳號 ACC</td><td>公司信箱／帳號狀態</td><td>以帳號主檔為單一來源</td></tr>
+        <tr><td>系統帳號</td><td>權限所屬人員</td><td>人員 USR</td><td>姓名／部門／人員狀態</td><td>建立帳號責任歸屬</td></tr>
+        <tr><td>NAS 權限</td><td>NAS 資料夾</td><td>資料夾 FOLDER</td><td>系統名稱／完整路徑</td><td>確認權限套用位置</td></tr>
+        <tr><td>NAS 權限</td><td>使用帳號／授權群組</td><td>ACC／GRP</td><td>登入名／驗證來源／狀態</td><td>確認授權對象</td></tr>
+        <tr><td>群組成員</td><td>成員帳號</td><td>系統帳號 ACC</td><td>登入名／姓名／部門</td><td>顯示群組成員資訊</td></tr>
+        <tr><td>成員關聯</td><td>所屬群組</td><td>帳號群組 GRP</td><td>群組名／來源系統編號</td><td>建立 ACC × GRP 關係</td></tr>
+        <tr><td>資訊系統</td><td>承載設備</td><td>硬體資產 HW</td><td>IP／資產狀態／角色</td><td>建立系統承載關係</td></tr>
+      </tbody>
+    </table></div>
+    <div class="card soft" style="margin-top:18px">
+      <h3>避免失效的設定原則</h3>
+      <ol style="padding-left:22px;color:var(--ink);display:grid;gap:4px;font-size:15px">
+        <li>先建立主連結，再設定自動帶出</li>
+        <li>連結鍵優先使用穩定編號（USR／ACC／SYS／FOLDER），不要用姓名</li>
+        <li>匯入更新時，第一欄必須是可比對的 Key</li>
+        <li>改動連結後需重新儲存或批次更新舊資料，既有載入值不一定自行回填</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="s9">
+    <div class="sh"><span class="n">09</span><h2>帳號生命週期與 ISMS 稽核應用</h2></div>
+    <p class="sub">把表單資料轉成可執行、可證明的管理流程。</p>
+    <div class="steps" style="--n:6">
+      <div class="step"><span class="s">01 申請</span><b>建立人員與需求</b><p>責任人／申請日期</p></div>
+      <div class="step"><span class="s">02 建立</span><b>系統帳號建檔</b><p>帳號類型／驗證來源</p></div>
+      <div class="step"><span class="s">03 授權</span><b>群組與 NAS 權限</b><p>最小權限／核准紀錄</p></div>
+      <div class="step"><span class="s">04 盤點</span><b>定期核對狀態</b><p>盤點日期／異常註記</p></div>
+      <div class="step"><span class="s">05 異動</span><b>部門或職務變更</b><p>權限調整／覆核</p></div>
+      <div class="step"><span class="s">06 離職</span><b>停權與移除成員</b><p>停用日期／完成證據</p></div>
+    </div>
+    <div class="dark" style="margin-top:20px">
+      <h3>可形成的稽核證據</h3>
+      <div class="cols">
+        <div><b>身分與責任</b><span>帳號對應人員、責任單位及系統來源</span></div>
+        <div><b>存取控制</b><span>群組成員、NAS 權限層級與拒絕規則</span></div>
+        <div><b>資產關係</b><span>資訊系統、承載設備、IP 與維護廠商</span></div>
+        <div><b>生命週期</b><span>申請、啟用、停權、刪除與最近盤點日期</span></div>
+        <div><b>持續改善</b><span>異常帳號、孤兒帳號、離職未停權與複核結果</span></div>
+        <div><b>帳號安全屬性</b><span>特權、共用、MFA、密碼不過期與變更日期</span></div>
+      </div>
+    </div>
+    <p class="hint">對應 ISO/IEC 27001:2022 附錄 A：A.5.9 資產清冊、A.5.16 身分管理、A.5.18 存取權限、A.8.2 特權存取權限、A.8.3 資訊存取限制。僅為設計對照，不代表已通過驗證。</p>
+  </section>
+
+  <section class="sec" id="s10">
+    <div class="sh"><span class="n">10</span><h2>未來系統擴充藍圖</h2></div>
+    <p class="sub">由帳號清冊延伸為跨部門的身分與權限異動管理流程。</p>
+    <div class="grid g4">
+      <div class="card soft"><div class="k"><i>01</i><h3>Microsoft 365 帳號</h3></div><p>納入 Exchange、Teams、OneDrive，並管理群組與授權方案。</p></div>
+      <div class="card soft"><div class="k"><i>02</i><h3>人資異動申請</h3></div><p>到職、轉調、留停與離職由人資發起，通知 IT 辦理。</p></div>
+      <div class="card soft"><div class="k"><i>03</i><h3>權限調整報表</h3></div><p>由人員帳號產生應新增、應移除與待確認的權限清單。</p></div>
+      <div class="card soft"><div class="k"><i>04</i><h3>通知與稽核軌跡</h3></div><p>保留申請、核准、執行、覆核日期與處理人，逾期自動提醒。</p></div>
+    </div>
+    <h3 style="margin-top:26px">跨部門權限異動流程</h3>
+    <div class="chain">
+      <div class="node"><b>人資提出申請</b><span>人員／異動原因／生效日</span><code>STEP 1</code></div><div class="arr"></div>
+      <div class="node"><b>主管確認</b><span>職務需求與權限範圍</span><code>STEP 2</code></div><div class="arr"></div>
+      <div class="node"><b>IT 執行調整</b><span>帳號、群組、NAS、M365</span><code>STEP 3</code></div><div class="arr"></div>
+      <div class="node"><b>完成與覆核</b><span>覆核人不兼執行人，保存證據</span><code>STEP 4</code></div>
+    </div>
+    <div class="dark" style="margin-top:20px">
+      <h3>分階段導入規劃</h3>
+      <div class="cols">
+        <div><b>Phase 1｜帳號範圍</b><span>建立 Microsoft 365 系統主檔、帳號類型、授權方案與群組關聯。</span></div>
+        <div><b>Phase 2｜流程串接</b><span>新增人資申請單、主管核准、IT 工作清單與完成通知。</span></div>
+        <div><b>Phase 3｜自動化治理</b><span>產生權限差異報表、逾期提醒、定期覆核與稽核儀表板。</span></div>
+      </div>
+      <p style="font-size:13.5px;color:#aebfd0;margin-top:14px">原則：系統仍不保存密碼或 Token；若未來串接 API，憑證應置於專用秘密管理工具。</p>
+    </div>
+  </section>
+
+  <footer class="end">
+    <div class="row"><span>畫面中的人員、帳號、路徑與主機資訊皆已遮蔽。</span><span>陳家榮｜IT維運與系統管理</span></div>
+    <div class="next"><a href="isms.html">相關作品：ISMS 與帳號權限管理整合實例 →</a><a href="https://coloplay1.github.io/isms-mapper/" target="_blank" rel="noopener">ISMS 條款對照台 →</a><a href="../">回作品集</a></div>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ISMS與帳號權限管理整合實例｜陳家榮</title>
+<meta name="description" content="將分散的帳號資料，接到人員異動、權限複審與維護紀錄，並以 ISO/IEC 27001:2022 管理觀念整理設計對照。">
+<meta property="og:title" content="ISMS與帳號權限管理整合實例">
+<meta property="og:description" content="將分散的帳號資料，接到人員異動、權限複審與維護紀錄。">
+<meta property="og:image" content="https://coloplay1.github.io/portfolio/img/isms-cover.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<nav class="bar"><div class="wrap">
+  <a class="back" href="../">← 作品集</a>
+  <a class="pdf" href="../isms-account-integration.pdf" download>下載 PDF</a>
+</div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eb">IT維運 × 資訊安全管理</div>
+    <h1>ISMS與帳號權限管理整合實例</h1>
+    <p class="lede">將分散的帳號資料，接到人員異動、權限複審與維護紀錄。</p>
+    <p class="who">陳家榮｜IT維運與系統管理</p>
+    <div class="tags"><span style="background:var(--blue)">Ragic</span><span style="background:var(--teal-d)">AD / NAS / 郵件</span><span style="background:var(--orange)">ISO/IEC 27001:2022</span></div>
+    <div class="toc">
+      <a href="#s1">問題與做法</a><a href="#s2">身分與成員關係</a><a href="#s3">管理要求對照</a><a href="#s4">調職流程</a><a href="#s5">紀錄編號</a><a href="#s6">成果與後續</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="sec" id="s1">
+    <div class="sh"><span class="n">01</span><h2>要回答的三個問題</h2></div>
+    <p class="sub">帳號清冊存在，不代表能回答管理上的問題。</p>
+    <div class="grid g3">
+      <div class="card soft"><h3>誰持有帳號</h3><p>帳號分散在不同平台，人員異動時需要逐一確認。</p></div>
+      <div class="card soft"><h3>權限是否仍需要</h3><p>帳號仍在使用，不代表原群組與資料夾授權都應保留。</p></div>
+      <div class="card soft"><h3>處理結果如何查</h3><p>核准內容、來源設定與清冊紀錄，需要能夠相互對照。</p></div>
+    </div>
+    <div class="split" style="margin-top:26px">
+      <h3>我的做法</h3>
+      <p>進修 ISO/IEC 27001 後，我以 Ragic 建立十張關聯表單，整理人員、帳號、群組及 NAS 授權，並將申請、核對、覆核與紀錄保存接入 ISMS 文件草案。</p>
+    </div>
+    <p class="hint">作品說明：依既有系統與修訂草案整理。示例資料皆為虛構；新增制度與頻率仍待組織核准。</p>
+  </section>
+
+  <section class="sec" id="s2">
+    <div class="sh"><span class="n">02</span><h2>把人員、帳號與群組接起來</h2></div>
+    <p class="sub">十張表單中的身分與成員關係。使用穩定編號配對，避免只靠姓名或相同登入名稱判斷。</p>
+    <div class="grid" id="s2grid">
+      <div>
+        <div class="diagram">
+          <svg viewBox="0 0 960 360" role="img" aria-label="USR、ACC、SYS、MEM、GRP 五張表單的連結關係">
+            <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" class="dl"/></marker></defs>
+            <g fill="none" class="arrows" stroke-width="2" marker-end="url(#a1)">
+              <path d="M350 70H272"/><path d="M610 70H688"/>
+              <path d="M480 230V132"/><path d="M610 290H688"/><path d="M820 230V132"/>
+              <path d="M350 300H140V132"/>
+            </g>
+            <g font-size="14" class="dl">
+              <text x="311" y="60" text-anchor="middle">持有人</text>
+              <text x="649" y="60" text-anchor="middle">來源系統</text>
+              <text x="490" y="186">帳號編號</text>
+              <text x="649" y="280" text-anchor="middle">群組編號</text>
+              <text x="830" y="186">來源系統</text>
+              <text x="150" y="186">人員連結</text>
+            </g>
+            <g font-size="18">
+              <rect class="dbox" x="10" y="20" width="260" height="110" rx="10" stroke-width="2"/><text class="dt" x="28" y="56">人員帳號總覽 USR</text><text class="dd" x="28" y="86" font-size="14">員工身分、部門、人員狀態</text>
+              <rect class="dbox" x="350" y="20" width="260" height="110" rx="10" stroke-width="2"/><text class="dt" x="368" y="56">系統帳號清冊 ACC</text><text class="dd" x="368" y="86" font-size="14">登入帳號、用途、持有人</text>
+              <rect class="dbox" x="690" y="20" width="260" height="110" rx="10" stroke-width="2"/><text class="dt" x="708" y="56">資訊系統主檔 SYS</text><text class="dd" x="708" y="86" font-size="14">來源系統與管理責任</text>
+              <rect class="dbox hl" x="350" y="232" width="260" height="118" rx="10" stroke-width="2"/><text class="dt" x="368" y="264">成員關聯表 MEM</text><text class="dd" x="368" y="290" font-size="14">帳號編號 ACC</text><text class="dd" x="368" y="312" font-size="14">群組編號 GRP</text><text class="dd" x="368" y="334" font-size="14">人員連結 USR</text>
+              <rect class="dbox" x="690" y="232" width="260" height="118" rx="10" stroke-width="2"/><text class="dt" x="708" y="264">帳號群組清冊 GRP</text><text class="dd" x="708" y="290" font-size="14">群組名稱、來源與用途</text>
+            </g>
+          </svg>
+        </div>
+        <p class="swipe">← 左右滑動查看完整圖 →</p>
+        <p class="hint">箭頭代表連結欄位引用主檔；參照子表可呈現關聯資料，實際更新仍依欄位設定。<a href="#ref2">[2]</a></p>
+      </div>
+      <div class="card soft">
+        <h3>一個帳號 × 一個群組<br>就是一筆 MEM</h3>
+        <p>MEM 的人員連結由 ACC 帶出，供人員頁面的子表彙總。</p>
+      </div>
+    </div>
+    <div class="split" style="margin-top:22px">
+      <h3>授權延伸</h3>
+      <p>PERM 引用資料夾 FOLDER 與 ACC／GRP；SYS、HW、VEN、VCT 記錄系統、設備及維護關係。完整架構見<a href="ragic.html#s3">《多系統帳號、權限與資產關聯管理系統》</a>。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <div class="sh"><span class="n">03</span><h2>把管理要求落到欄位與紀錄</h2></div>
+    <p class="sub">以 ISO/IEC 27001 管理觀念整理設計對照，讓每項管理動作都有可查詢的資料與處理依據。<a href="#ref1">[1]</a></p>
+    <div class="scroll">
+      <table style="min-width:860px">
+        <thead><tr><th>管理重點</th><th>本案的設計方式</th><th>對應表單</th><th>參考對應（2022 版）</th><th>保留的證據</th></tr></thead>
+        <tbody>
+          <tr><td>身分與責任</td><td>區分個人、共用、服務及儀器帳號；指定責任人。</td><td class="mono">USR／ACC</td><td>A.5.16 身分識別管理</td><td>帳號用途、歸屬與核准依據</td></tr>
+          <tr><td>權限生命週期</td><td>依到職、調職、離職需求，核准新增、調整及回收。</td><td class="mono">F-05-01<br>USR／ACC</td><td>A.5.18 存取權限<br>A.6.5 任用終止或變更後責任</td><td>生效時間、來源執行與覆核</td></tr>
+          <tr><td>群組與資料夾授權</td><td>以成員關聯與授權規則追溯帳號，保留來源系統。</td><td class="mono">GRP／MEM<br>FOLDER／PERM</td><td>A.5.15 存取控制<br>A.8.3 資訊存取限制</td><td>來源快照、授權內容與差異</td></tr>
+          <tr><td>定期權限複審</td><td>清冊更新後，由權責人判斷權限是否仍有必要；特權帳號另列複審。</td><td class="mono">F-05-02<br>F-05-03</td><td>A.5.18 存取權限<br>A.8.2 特權存取權</td><td>續用／調整／移除判斷與結案</td></tr>
+          <tr><td>紀錄與持續改善</td><td>核對匯入、關聯及公式，記錄異常、處理與追蹤。</td><td class="mono">WI-05-01<br>F-05-03</td><td>本文 7.5 文件化資訊<br>本文 10 改善</td><td>批次核對、抽查結果與改善紀錄</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint">F-05-01 使用者權限申請異動單、F-05-02 權限定期複審表、F-05-03 清冊更新與差異追蹤表、WI-05-01 帳號與權限清冊維護作業指引，均為本案配套草案。參考對應採 ISO/IEC 27001:2022 附錄 A（名稱依本案 SoA 草案）及本文條號，僅作設計對照，不代表已通過驗證。</p>
+  </section>
+
+  <section class="sec" id="s4">
+    <div class="sh"><span class="n">04</span><h2>以調職為例，串起申請到覆核</h2></div>
+    <p class="sub">示例：示範員工由 A 部門調至 B 部門。確認新職務需求，並回收不再需要的原群組與資料夾權限。</p>
+    <div class="steps" style="--n:5">
+      <div class="step"><span class="s">01</span><span class="r">人資／主管</span><b>提出異動</b><p>員工、部門與預定生效時間</p></div>
+      <div class="step"><span class="s">02</span><span class="r">權責主管</span><b>核准需求</b><p>保留、新增、回收及交接例外；例外需設到期日</p></div>
+      <div class="step"><span class="s">03</span><span class="r">IT執行人</span><b>來源系統變更</b><p>實際調整 AD／NAS 或郵件權限</p></div>
+      <div class="step"><span class="s">04</span><span class="r">IT執行人</span><b>更新 Ragic</b><p>匯入並核對關聯與公式</p></div>
+      <div class="step"><span class="s">05</span><span class="r">指定覆核人</span><b>確認與留存</b><p>對照核准、來源與清冊結果；覆核人不兼執行人</p></div>
+    </div>
+    <div class="callout" style="margin-top:18px"><b>重點：</b>Ragic 保存查詢與盤點紀錄；來源系統的實際權限，仍須由 IT 執行並查證。</div>
+    <div class="scroll" style="margin-top:18px">
+      <table>
+        <thead><tr><th>資料物件</th><th>調整前</th><th>調整後（示意）</th><th>判斷意義</th></tr></thead>
+        <tbody>
+          <tr><td>人員 USR</td><td>在職／A部門</td><td>在職／B部門</td><td>調職仍是在職人員。</td></tr>
+          <tr><td>登入帳號 ACC</td><td>啟用</td><td>啟用</td><td>仍需要使用的帳號可繼續保留。</td></tr>
+          <tr><td>群組成員 MEM</td><td>原群組有效</td><td>原群組移除／新群組有效</td><td>群組調整以成員關聯記錄。</td></tr>
+          <tr><td>資料夾授權 PERM</td><td>原部門資料夾個人授權有效</td><td>移除，或經核准暫留並設到期日</td><td>個人授權不隨群組調整消失，需逐筆確認。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint">人員狀態、帳號狀態與成員狀態各有用途；移除一項群組關係，不等同停用整個帳號。</p>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="sh"><span class="n">05</span><h2>用紀錄編號串起申請與調整結果</h2></div>
+    <p class="sub">欄位重繪示例。人員、帳號、群組及案件均為虛構；本頁展示配套表單與清冊的對照方式。</p>
+    <div class="grid g2">
+      <div class="scroll"><table class="kv">
+        <thead><tr><th colspan="2">使用者權限申請異動單　F-05-01</th></tr></thead>
+        <tbody>
+          <tr><td class="k">申請編號</td><td class="mono">REQ-DEMO-01</td></tr>
+          <tr><td class="k">異動人員／USR</td><td>示範員工甲／<span class="mono">USR-DEMO-01</span></td></tr>
+          <tr><td class="k">申請類別</td><td>調職：A部門至B部門</td></tr>
+          <tr><td class="k">涉及系統／帳號</td><td class="mono">SYS-DEMO-NAS／ACC-DEMO-01</td></tr>
+          <tr><td class="k">權限明細</td><td>移除 <span class="mono">GRP-DEMO-A</span>；加入 <span class="mono">GRP-DEMO-B</span></td></tr>
+          <tr><td class="k">核准／執行／覆核</td><td>示範主管乙／示範IT丙／示範覆核丁</td></tr>
+        </tbody>
+      </table></div>
+      <div class="scroll"><table class="kv">
+        <thead><tr><th>成員關聯表</th><th>調整前</th><th>調整後</th></tr></thead>
+        <tbody>
+          <tr><td class="k">成員關聯編號</td><td class="mono">MEM-DEMO-01</td><td class="mono">MEM-DEMO-02</td></tr>
+          <tr><td class="k">帳號編號</td><td class="mono">ACC-DEMO-01</td><td class="mono">ACC-DEMO-01</td></tr>
+          <tr><td class="k">人員連結</td><td class="mono">USR-DEMO-01</td><td class="mono">USR-DEMO-01</td></tr>
+          <tr><td class="k">群組編號</td><td class="mono">GRP-DEMO-A</td><td class="mono">GRP-DEMO-B</td></tr>
+          <tr><td class="k">來源系統</td><td class="mono">SYS-DEMO-NAS</td><td class="mono">SYS-DEMO-NAS</td></tr>
+          <tr><td class="k">成員／一致性</td><td>已移除／一致</td><td>有效／一致</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="callout" style="margin-top:18px"><b>批次紀錄 F-05-03：</b><span class="mono">BATCH-DEMO-01</span> 對照 <span class="mono">REQ-DEMO-01</span> 與 <span class="mono">MEM-DEMO-01</span>、<span class="mono">MEM-DEMO-02</span></div>
+    <p class="hint">申請與覆核證據可先留在受控表單，由更新批次記錄對應的清冊編號。同一帳號加入新群組會形成另一筆 MEM；原關聯改為已移除並保留紀錄，方便後續查詢。</p>
+  </section>
+
+  <section class="sec" id="s6">
+    <div class="sh"><span class="n">06</span><h2>目前完成的設計與後續方向</h2></div>
+    <p class="sub">以維運需求出發，逐步補足身分關聯、作業流程與查核依據。</p>
+    <div class="grid g2">
+      <div class="dark"><h3>已完成的系統與文件設計</h3><ul><li>十張表單的人員、帳號與授權關聯</li><li>AD／NAS 資料匯出、匯入與核對流程</li><li>申請、複審及差異追蹤等 ISMS 草案</li></ul></div>
+      <div class="card soft"><h3>後續規劃</h3><ul style="padding-left:18px;color:var(--muted);display:grid;gap:6px"><li>納入 Microsoft 365 等雲端帳號</li><li>串接人資提出的人員異動申請</li><li>由人員資料產生待調整權限報表</li></ul></div>
+    </div>
+    <div class="split" style="margin-top:24px"><h3>正式導入前的確認</h3><p>由組織核定角色、時限與複審頻率，再以實際案件試行；同時確認 Ragic 權限、備份及還原方式，保留測試與核准紀錄。</p></div>
+    <div class="split" style="margin-top:16px"><h3>設計心得</h3><p>把誰核准、IT 做了什麼，以及如何確認結果寫清楚，讓清冊成為日常交接與權限盤點可以使用的依據。</p></div>
+  </section>
+
+  <footer class="end">
+    <p id="ref1">[1] ISO：<a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener">官方 ISO/IEC 27001 介紹</a></p>
+    <p id="ref2">[2] Ragic：<a href="https://www.ragic.com/intl/en/doc-kb/271/which-features-sync-data-automatically-and-which-require-triggering" target="_blank" rel="noopener">自動同步與需觸發的功能</a>　參考查閱 2026/09/09</p>
+    <div class="next"><a href="ragic.html">下一個作品：多系統帳號、權限與資產關聯管理系統 →</a><a href="../">回作品集</a></div>
+  </footer>
+</main>
+</body>
+</html>
