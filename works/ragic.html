@@ -70,14 +70,7 @@
   <section class="sec" id="s4">
     <div class="sh"><span class="n">04</span><h2>系統、設備、廠商與聯絡窗口</h2></div>
     <p class="sub">從服務定位一路追溯至承載資產與維護責任。</p>
-    <figure class="shot"><div class="rg"><h4>資訊系統主檔</h4>
-<table class="w"><thead><tr><th>系統編號</th><th>系統名稱</th><th>系統類別</th><th>系統環境</th><th>系統狀態</th><th>主機名稱</th><th>驗證來源</th><th>IT主要負責人</th></tr></thead><tbody>
-<tr><td class="rl">SYS-DEMO-01</td><td>雲端郵件服務</td><td>電子郵件／通訊服務</td><td>正式</td><td>使用中</td><td>—</td><td><span class="chip">系統本機</span></td><td>示範IT丙</td></tr>
-<tr><td class="rl">SYS-DEMO-02</td><td>NAS-A 備份儲存服務</td><td>備份與儲存</td><td>正式</td><td>使用中</td><td>NAS-A01</td><td><span class="chip">Active Directory</span><span class="chip">系統本機</span></td><td>示範IT丙</td></tr>
-<tr><td class="rl">SYS-DEMO-03</td><td>NAS-B 主要檔案服務</td><td>檔案儲存</td><td>正式</td><td>使用中</td><td>NAS-B01</td><td><span class="chip">Active Directory</span><span class="chip">系統本機</span></td><td>示範IT丙</td></tr>
-<tr><td class="rl">SYS-DEMO-04</td><td>NAS-C 部門檔案服務</td><td>檔案儲存</td><td>正式</td><td>使用中</td><td>NAS-C01</td><td><span class="chip">系統本機</span></td><td>示範IT丁</td></tr>
-<tr><td class="rl">SYS-DEMO-05</td><td>Active Directory</td><td>身分與帳號管理</td><td>正式</td><td>使用中</td><td>DC-01</td><td><span class="chip">Active Directory</span></td><td>示範IT丙</td></tr>
-</tbody></table></div><figcaption>資訊系統主檔｜系統清單（示意畫面｜依實際 Ragic 欄位重繪，資料皆為虛構）</figcaption></figure>
+    <figure class="shot"><a href="img/sys.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/sys.png" alt="資訊系統主檔清單畫面" loading="lazy"></a><figcaption>資訊系統主檔｜系統清單（實際畫面，主機名稱與負責人已遮蔽）・點圖可放大</figcaption></figure>
     <div class="card" style="margin-top:18px">
       <h3>連結設計</h3>
       <div class="links">
@@ -92,20 +85,8 @@
     <div class="sh"><span class="n">05</span><h2>人員、帳號與所屬群組彙總</h2></div>
     <p class="sub">人員頁同時呈現持有帳號，以及各帳號所屬的群組關係。</p>
     <div class="grid">
-      <figure class="shot"><div class="rg"><div class="sec" style="margin-top:0">持有系統帳號</div>
-<table class="w"><thead><tr><th>帳號編號</th><th>系統名稱</th><th>登入帳號</th><th>帳號狀態</th><th>帳號類型</th><th>帳號驗證來源</th><th>是否為特權帳號</th><th>隨人員離職停權</th><th>最後登入日期</th><th>歸屬確認狀態</th></tr></thead><tbody>
-<tr><td class="rl">ACC-DEMO-01</td><td>Active Directory</td><td>demo.a</td><td>啟用</td><td>個人帳號</td><td>Active Directory</td><td><span class="no">✓</span></td><td><span class="ok">✓</span></td><td>2026/08/06</td><td>已確認</td></tr>
-<tr><td class="rl">ACC-DEMO-02</td><td>NAS-B 主要檔案服務</td><td>demo.a</td><td>啟用</td><td>個人帳號</td><td>Active Directory</td><td><span class="no">✓</span></td><td><span class="ok">✓</span></td><td></td><td>已確認</td></tr>
-<tr><td class="rl">ACC-DEMO-03</td><td>NAS-C 部門檔案服務</td><td>demo_a</td><td>啟用</td><td>個人帳號</td><td>系統本機</td><td><span class="no">✓</span></td><td><span class="ok">✓</span></td><td></td><td>已確認</td></tr>
-<tr><td class="rl">ACC-DEMO-04</td><td>NAS-C 部門檔案服務</td><td>demo_admin</td><td>啟用</td><td>管理員帳號</td><td>系統本機</td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td></td><td>已確認</td></tr>
-<tr><td class="rl">ACC-DEMO-05</td><td>雲端郵件服務</td><td>demo.a@example.com</td><td>啟用</td><td>個人帳號</td><td>系統本機</td><td><span class="no">✓</span></td><td><span class="ok">✓</span></td><td></td><td>已確認</td></tr>
-</tbody></table></div><figcaption>人員明細｜第一個子表：持有系統帳號（示意畫面｜依實際 Ragic 欄位重繪，資料皆為虛構）</figcaption></figure>
-      <figure class="shot"><div class="rg"><div class="sec" style="margin-top:0">所屬帳號群組</div>
-<table class="w"><thead><tr><th>成員關聯編號</th><th>帳號系統名稱</th><th>帳號編號</th><th>登入帳號</th><th>群組編號</th><th>群組名稱</th><th>成員狀態</th><th>帳號狀態</th><th>系統一致性</th><th>最後確認日期</th></tr></thead><tbody>
-<tr><td>MEM-DEMO-01</td><td>Active Directory</td><td class="rl">ACC-DEMO-01</td><td>demo.a</td><td class="rl">GRP-DEMO-01</td><td>Domain Users</td><td>有效</td><td>啟用</td><td>一致</td><td>2026/08/20</td></tr>
-<tr><td>MEM-DEMO-02</td><td>Active Directory</td><td class="rl">ACC-DEMO-01</td><td>demo.a</td><td class="rl">GRP-DEMO-A</td><td>A部門共用</td><td>有效</td><td>啟用</td><td>一致</td><td>2026/08/20</td></tr>
-<tr><td>MEM-DEMO-03</td><td>Active Directory</td><td class="rl">ACC-DEMO-01</td><td>demo.a</td><td class="rl">GRP-DEMO-P</td><td>專案群組 P</td><td>有效</td><td>啟用</td><td>一致</td><td>2026/08/20</td></tr>
-</tbody></table></div><figcaption>人員明細｜第二個子表：所屬帳號群組，由 MEM 帶回（示意畫面｜依實際 Ragic 欄位重繪，資料皆為虛構）</figcaption></figure>
+      <figure class="shot"><a href="img/usr_acc.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/usr_acc.png" alt="人員明細的持有系統帳號子表" loading="lazy"></a><figcaption>人員明細｜第一個子表：持有系統帳號（登入帳號與系統代號已遮蔽）</figcaption></figure>
+      <figure class="shot"><a href="img/usr_mem.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/usr_mem.png" alt="人員明細的所屬帳號群組子表" loading="lazy"></a><figcaption>人員明細｜第二個子表：所屬帳號群組，由 MEM 帶回（編號與群組名稱已遮蔽）</figcaption></figure>
     </div>
     <div class="chain" style="margin-top:22px">
       <div class="node"><b>人員主檔</b><span>姓名、部門、人員狀態</span><code>USR</code></div>
@@ -123,7 +104,7 @@
     <div class="sh"><span class="n">06</span><h2>NAS 資料夾與權限規則</h2></div>
     <p class="sub">拆開「目錄是什麼」與「誰擁有什麼權限」。</p>
     <div class="grid g2" style="align-items:start">
-      <figure class="shot"><div class="rg"><h4>NAS資料夾權限清冊</h4><p class="desc">每筆資料代表一個授權對象對特定NAS資料夾的有效權限。本表記錄目前權限狀態，不取代NAS實際ACL設定，亦不得保存密碼或憑證。</p><div class="sec">權限基本資料</div><div class="form"><div class="l">權限編號</div><div>PERM-DEMO-01</div><div class="l">權限狀態</div><div>啟用</div><div class="l">NAS資料夾</div><div><span class="rl">FOLDER-DEMO-01</span></div><div class="l">NAS系統名稱</div><div>NAS-B 主要檔案服務</div><div class="l">完整路徑</div><div>\\NAS-B\部門共用\A部門</div><div class="l">資料夾重要等級</div><div>一般</div><div class="l">授權對象類型</div><div>使用帳號</div><div class="l">權限來源</div><div>個人授權</div><div class="l">權限等級</div><div>讀寫</div><div class="l">是否允許管理</div><div>否</div></div><div class="sec">授權身分資料</div><div class="form"><div class="l">使用帳號</div><div><span class="rl">ACC-DEMO-02</span></div><div class="l">帳號類型</div><div>個人帳號</div><div class="l">帳號登入名稱</div><div>demo.a</div><div class="l">帳號持有人姓名</div><div>示範員工甲</div><div class="l">帳號狀態</div><div>啟用</div><div class="l">權限所屬人員</div><div><span class="rl">USR-DEMO-01</span></div><div class="l">使用部門</div><div>A部門</div><div class="l">帳號驗證來源</div><div>Active Directory</div><div class="l">群組來源</div><div></div><div class="l">授權群組名稱</div><div></div></div></div><figcaption>NAS 權限清冊｜單筆授權規則（示意畫面｜依實際 Ragic 欄位重繪，資料皆為虛構）</figcaption></figure>
+      <figure class="shot"><a href="img/perm.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/perm.png" alt="NAS 權限清冊單筆授權規則" loading="lazy"></a><figcaption>NAS 權限清冊｜單筆授權規則（路徑與帳號資訊已遮蔽）・點圖可放大</figcaption></figure>
       <div class="grid">
         <h3 style="margin:0">一條規則一筆紀錄</h3>
         <div class="scroll"><table class="kv">
@@ -145,7 +126,7 @@
     <div class="sh"><span class="n">07</span><h2>帳號群組成員關聯表</h2></div>
     <p class="sub">以獨立 MEM 紀錄解開帳號與群組的多對多關係。</p>
     <div class="grid g2" style="align-items:start">
-      <figure class="shot"><div class="rg"><h4>帳號群組成員關聯表</h4><p class="desc">記錄系統帳號與帳號群組之間的成員關係，一筆資料代表一個帳號加入一個群組，並保留資料來源、有效狀態、確認日期及移除紀錄。本表用於呈現人員的群組歸屬，不直接變更 AD 或 NAS 權限。</p><div class="sec">成員基本資料</div><div class="form"><div class="l">成員關聯編號</div><div>MEM-DEMO-07</div><div class="l">成員狀態</div><div>有效</div><div class="l">帳號編號</div><div><span class="rl">ACC-DEMO-11</span></div><div class="l">登入帳號</div><div>demo.b</div><div class="l">帳號系統名稱</div><div>Active Directory</div><div class="l">帳號狀態</div><div>已停用</div><div class="l">帳號驗證來源</div><div>Active Directory</div><div class="l">帳號類型</div><div>個人帳號</div><div class="l">權限所屬人員</div><div>示範員工乙</div><div class="l">員工編號</div><div>E-DEMO-02</div><div class="l">人員狀態</div><div>離職</div><div class="l">使用部門</div><div>B部門</div></div><div class="sec">所屬群組資料</div><div class="form"><div class="l">群組編號</div><div><span class="rl">GRP-DEMO-B</span></div><div class="l">群組名稱</div><div>B部門共用</div><div class="l">群組系統名稱</div><div>Active Directory</div><div class="l">群組來源類型</div><div>Active Directory</div><div class="l">系統一致性</div><div>一致</div><div class="l">最後確認日期</div><div>2026/08/20</div></div></div><figcaption>MEM 明細｜帳號、群組與一致性（示意畫面｜依實際 Ragic 欄位重繪，資料皆為虛構）</figcaption></figure>
+      <figure class="shot"><a href="img/mem.png" target="_blank" rel="noopener" title="開啟原尺寸"><img src="img/mem.png" alt="帳號群組成員關聯明細" loading="lazy"></a><figcaption>MEM 明細｜帳號、群組與一致性（編號已遮蔽）・點圖可放大</figcaption></figure>
       <div class="grid">
         <h3 style="margin:0">三種狀態各自獨立</h3>
         <div class="scroll"><table class="kv">
@@ -156,7 +137,7 @@
             <tr><td>成員狀態</td><td>這條群組關係是否有效</td><td>有效</td></tr>
           </tbody>
         </table></div>
-        <div class="callout">以左圖這筆示範紀錄為例：示範員工乙已離職、帳號已停用，但群組成員關係仍標為有效。三種狀態分開記錄，盤點時才看得出哪些群組關係需要清理。</div>
+        <div class="callout">以左圖這筆紀錄為例：人員已離職、帳號已停用，但群組成員關係仍標為有效。三種狀態分開記錄，盤點時才看得出哪些群組關係需要清理。</div>
         <p class="hint" style="margin:0">「系統一致性」比較 ACC 與 GRP 的來源系統編號，協助攔截跨系統誤連。</p>
       </div>
     </div>
@@ -241,7 +222,7 @@
   </section>
 
   <footer class="end">
-    <div class="row"><span>系統畫面皆為依實際欄位重繪的示意，人員、帳號、路徑與主機資料均為虛構。</span><span>陳家榮｜IT維運與系統管理</span></div>
+    <div class="row"><span>畫面中的人員、帳號、路徑與主機資訊皆已遮蔽。</span><span>陳家榮｜IT維運與系統管理</span></div>
     <div class="next"><a href="isms.html">相關作品：ISMS 與帳號權限管理整合實例 →</a><a href="https://coloplay1.github.io/isms-mapper/" target="_blank" rel="noopener">ISMS 條款對照台 →</a><a href="../">回作品集</a></div>
   </footer>
 </main>
