@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>帳號與權限維護工作流程手冊｜陳家榮</title>
+<meta name="description" content="AD、Synology NAS、郵件平台與 Ragic 關聯資料的維護流程：唯讀匯出、穩定鍵、匯入順序、驗證與稽核證據。">
+<meta property="og:title" content="帳號與權限維護工作流程手冊（節錄版）">
+<meta property="og:description" content="AD、Synology NAS、郵件平台與 Ragic 關聯資料的維護流程。">
+<meta property="og:image" content="https://coloplay1.github.io/portfolio/img/ragic-cover.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+pre{background:#13243a;color:#dbe7f3;border-radius:12px;padding:16px 18px;overflow-x:auto;font-family:"JetBrains Mono","Noto Sans Mono CJK TC","DejaVu Sans Mono",ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.65;tab-size:2;margin:0}
+pre .c{color:#8aa4bd}
+.code{position:relative}
+.code .lang{position:absolute;top:8px;right:12px;font-size:11.5px;color:#8aa4bd;letter-spacing:.06em}
+h3.sub3{font-size:17px;margin:26px 0 10px}
+.note-k{display:inline-block;font-weight:500;margin-right:8px;color:var(--teal-d)}
+.warn{background:#fff6e0;border-left:4px solid var(--orange);border-radius:0 10px 10px 0;padding:12px 16px;font-size:15px;color:#3b2f17}
+.warn .note-k{color:#a75a12}
+@media (prefers-color-scheme:dark){.warn{background:#3a2d16;color:#f3e3c4}.warn .note-k{color:#f0a860}}
+.fixlog{font-size:14px}
+.fixlog li{margin-bottom:4px}
+ol.flow{counter-reset:f;list-style:none;display:grid;gap:8px}
+ol.flow li{counter-increment:f;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:baseline}
+ol.flow li::before{content:counter(f);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px}
+@media print{
+  @page{size:A4;margin:14mm 14mm 16mm}
+  .bar,.toc,.swipe,.next,.noprint{display:none!important}
+  body{background:#fff;font-size:12.5px;color:#1d2a36}
+  .hero{padding-block:28px 30px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hero::after,.hero::before{display:none}
+  .wrap{max-width:none;padding:0}
+  section.sec{padding-block:18px 0;break-inside:auto}
+  .scroll,.card,.callout,.warn,.code,.step,figure{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  pre{font-size:11px;white-space:pre-wrap;word-break:break-all;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th,.dark{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .scroll table{min-width:0}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .dark .cols{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .dark{break-inside:avoid;padding:16px 20px}
+  .card{padding:12px 14px}.card p{font-size:12px}.card h3{font-size:13.5px;margin-bottom:4px}
+  .callout,.warn{font-size:12px;padding:9px 12px}
+  table{font-size:11.5px}th,td{padding:6px 9px}
+  h3.sub3{font-size:14px;margin:14px 0 6px}
+  .sh h2{font-size:19px}.sub{margin-bottom:12px;font-size:12.5px}
+  .hero .wrap{padding:0 20px!important}.hero{border-radius:10px}
+  .hero h1{font-size:26px}.hero .lede{font-size:14px;margin-top:8px}.tags{margin-top:12px}
+  ol.flow{gap:4px}ol.flow li{font-size:12.5px}
+  .hint{font-size:11px}
+  pre{padding:10px 12px;line-height:1.5}
+  footer.end{margin-top:16px}
+}
+</style>
+</head>
+<body>
+<nav class="bar"><div class="wrap">
+  <a class="back" href="ragic.html">← 帳號權限關聯系統</a>
+  <a class="pdf" href="../ops-maintenance-manual.pdf" download>下載 PDF</a>
+</div></nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eb">維護工作流程手冊｜節錄版</div>
+    <h1>IT 帳號與權限管理系統 維護流程</h1>
+    <p class="lede">AD・Synology NAS・郵件平台・Ragic 關聯資料維護</p>
+    <p class="who">陳家榮｜IT維運與系統管理　·　版本 1.1　·　2026-10-25</p>
+    <div class="tags"><span style="background:var(--blue)">PowerShell</span><span style="background:var(--teal-d)">SSH / Synology DSM</span><span style="background:var(--orange)">ISO 27001 A.5.37 書面化作業程序</span></div>
+    <div class="toc">
+      <a href="#s1">範圍與原則</a><a href="#s2">表單與關聯鍵</a><a href="#s3">AD 帳號匯出</a><a href="#s4">AD 群組與成員</a><a href="#s5">NAS 匯出</a><a href="#s6">Ragic 匯入</a><a href="#s7">驗證與證據</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="callout" style="margin-top:28px"><b>節錄說明</b>　本文件由完整版維護手冊重新編排，供面試展示系統治理、資料匯入與查核方法。組織名稱、帳號、設備、網域、路徑與內部編號均已泛化；尖括號 <code>&lt; &gt;</code> 內為範例參數。</div>
+
+  <section class="sec">
+    <div class="sh"><span class="n">00</span><h2>設計目的</h2></div>
+    <div class="grid g3">
+      <div class="card soft"><p>把分散於 AD、NAS 與郵件平台的帳號及權限，轉為可追溯的集中清冊。</p></div>
+      <div class="card soft"><p>以穩定識別鍵建立人員、帳號、群組與資料夾權限的關聯。</p></div>
+      <div class="card soft"><p>建立可重複執行、可驗證、可交接並可保留稽核證據的維護流程。</p></div>
+    </div>
+    <div class="warn" style="margin-top:16px"><span class="note-k">安全邊界</span>Ragic 僅保存管理屬性與關聯，不保存密碼、私鑰、權杖、雜湊或可還原憑證。</div>
+  </section>
+
+  <section class="sec" id="s1">
+    <div class="sh"><span class="n">01</span><h2>系統範圍與核心原則</h2></div>
+    <div class="scroll"><table>
+      <thead><tr><th>管理對象</th><th>權威來源</th><th>Ragic 的角色</th></tr></thead>
+      <tbody>
+        <tr><td>人員與任職狀態</td><td>人資／主管通知</td><td>人員主檔與生命週期追蹤</td></tr>
+        <tr><td>AD 帳號與群組</td><td>Active Directory</td><td>集中清冊、責任人與群組關聯</td></tr>
+        <tr><td>NAS 帳號、群組與 ACL</td><td>Synology NAS</td><td>跨設備盤點與權限規則追溯</td></tr>
+        <tr><td>郵件帳號</td><td>郵件管理平台</td><td>信箱狀態、用途及人員／責任人配對</td></tr>
+      </tbody>
+    </table></div>
+    <h3 class="sub3">七步標準流程</h3>
+    <ol class="flow">
+      <li>備份 Ragic 現況，記錄執行時間、範圍與基準筆數。</li>
+      <li>使用唯讀查詢從來源平台匯出，保留原始檔。</li>
+      <li>複製工作檔並標準化欄位、日期、狀態與編碼。</li>
+      <li>以 SID、系統編號＋登入帳號或 ACC|GRP 建立穩定識別鍵。</li>
+      <li>依主檔優先順序匯入 Ragic，避免關聯目標尚未建立。</li>
+      <li>執行連結載入與公式套用，刷新參照子表。</li>
+      <li>核對筆數、抽查完整鏈路，保存摘要與異常清單。</li>
+    </ol>
+    <div class="warn" style="margin-top:16px"><span class="note-k">判斷原則</span>實際平台是權限真相來源；Ragic 是某一時間點的管理快照。不可只在 Ragic 停權，就認定來源平台已完成停用。</div>
+    <h3 class="sub3">建議維護週期</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>時機</th><th>範圍</th><th>主要輸出</th></tr></thead>
+      <tbody>
+        <tr><td>人員異動即時</td><td>新增、調職、離職與特權變更</td><td>申請、處理與驗證紀錄</td></tr>
+        <tr><td>每月</td><td>AD 帳號、群組與直接成員</td><td>CSV、差異與異常清單</td></tr>
+        <tr><td>每季</td><td>NAS 帳號、群組、成員及根層 ACL</td><td>TXT／CSV、抽查紀錄</td></tr>
+        <tr><td>每半年</td><td>特權、共用、外部及未使用帳號</td><td>覆核報表與責任人確認</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="sec" id="s2">
+    <div class="sh"><span class="n">02</span><h2>表單架構與關聯鍵</h2></div>
+    <div class="grid g2" style="align-items:start">
+      <div class="scroll"><table class="kv">
+        <thead><tr><th>表單</th><th>識別碼</th><th>一筆資料代表</th></tr></thead>
+        <tbody>
+          <tr><td>人員帳號總覽</td><td class="mono">USR-xxxxx</td><td>一位員工／受管理人員</td></tr>
+          <tr><td>資訊系統主檔</td><td class="mono">SYS-xxxxx</td><td>一項 AD、NAS 或郵件服務</td></tr>
+          <tr><td>系統帳號清冊</td><td class="mono">ACC-xxxxx</td><td>某系統中的一個登入身分</td></tr>
+          <tr><td>帳號群組清冊</td><td class="mono">GRP-xxxxx</td><td>某系統中的一個群組</td></tr>
+          <tr><td>帳號群組成員關聯表</td><td class="mono">MEM-xxxxx</td><td>一個帳號加入一個群組</td></tr>
+          <tr><td>NAS 資料夾主檔</td><td class="mono">FOLDER-xxxxx</td><td>一個共享資料夾或受管路徑</td></tr>
+          <tr><td>NAS 權限清冊</td><td class="mono">PERM-xxxxx</td><td>一條資料夾授權規則</td></tr>
+        </tbody>
+      </table></div>
+      <div class="grid">
+        <div class="scroll"><table class="kv">
+          <thead><tr><th>資料</th><th>穩定鍵</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td>AD 帳號</td><td class="mono">AD|&lt;帳號 SID&gt;</td><td>改名後 SID 通常仍可維持識別</td></tr>
+            <tr><td>NAS 帳號</td><td class="mono">&lt;SYS&gt;|&lt;Login&gt;</td><td>避免不同 NAS 同名帳號誤配</td></tr>
+            <tr><td>群組</td><td class="mono">&lt;SYS&gt;|&lt;SID 或 GID&gt;</td><td>群組名稱變更時仍可追蹤</td></tr>
+            <tr><td>成員關聯</td><td class="mono">&lt;ACC&gt;|&lt;GRP&gt;</td><td>一個帳號加入一個群組形成唯一關係</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout"><b>關聯方向</b>　連結欄位由關聯資料指向主檔，用以保存穩定鍵；主檔再透過反向參照子表呈現「持有帳號」或「所屬群組」。畫面可雙向查閱，不等於資料庫必須建立兩組互相寫入的欄位。</div>
+      </div>
+    </div>
+    <h3 class="sub3">最低必要狀態欄位</h3>
+    <div class="grid g4">
+      <div class="card soft"><h3>來源狀態</h3><p>來源平台實際啟用／停用狀態。</p></div>
+      <div class="card soft"><h3>管理狀態</h3><p>有效、待確認、已移除或例外。</p></div>
+      <div class="card soft"><h3>同步日期</h3><p>本筆資料最後一次被來源匯出覆核的日期。</p></div>
+      <div class="card soft"><h3>責任人</h3><p>共用、服務或外部帳號必須指定負責人。</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <div class="sh"><span class="n">03</span><h2>AD 帳號匯出（PowerShell）</h2></div>
+    <div class="callout"><b>使用方式</b>　在已安裝 RSAT ActiveDirectory 模組的受管電腦執行。尖括號內是範例參數，使用前必須替換；查詢帳號只需具備必要的唯讀權限。</div>
+
+    <h3 class="sub3">3.1 參數與前置檢查</h3>
+<div class="code"><span class="lang">POWERSHELL</span><pre>Import-Module ActiveDirectory
+$Stamp     = Get-Date -Format "yyyyMMdd_HHmmss"
+$ExportDir = "&lt;受控輸出根目錄&gt;\AD_$Stamp"
+$SystemId  = "&lt;AD 系統編號&gt;"
+New-Item -ItemType Directory -Path $ExportDir -Force | Out-Null
+
+Get-Module ActiveDirectory | Select-Object Name, Version
+Test-Path $ExportDir</pre></div>
+
+    <h3 class="sub3">3.2 帳號清冊（節錄欄位）</h3>
+<div class="code"><span class="lang">POWERSHELL</span><pre>Get-ADUser -Filter * -Properties DisplayName, Mail, Enabled,
+    EmployeeID, Department, SID, LastLogonDate |
+  ForEach-Object {
+    [pscustomobject]@{
+      '所屬資訊系統' = $SystemId
+      '登入帳號'     = $_.SamAccountName
+      '帳號狀態'     = if ($_.Enabled) { '啟用' } else { '已停用' }
+      '員工編號'     = $_.EmployeeID
+      '持有人姓名'   = $_.DisplayName
+      '公司信箱'     = $_.Mail
+      '帳號SID'      = $_.SID.Value
+      '同步鍵'       = "AD|$($_.SID.Value)"
+      '最近登入日期' = $_.LastLogonDate
+    }
+  } |
+  Export-Csv -Path "$ExportDir\AD_Accounts.csv" -NoTypeInformation -Encoding UTF8</pre></div>
+    <p class="hint"><b>注意</b>　LastLogonDate 取自會在網域控制站間複寫的時間戳，與實際最後登入可能相差約兩週；判斷閒置帳號時以「超過門檻天數」看待，不作精確日期使用。</p>
+
+    <h3 class="sub3">3.3 單筆新人／異動帳號</h3>
+<div class="code"><span class="lang">POWERSHELL</span><pre>$Login = "&lt;本次登入帳號&gt;"   <span class="c"># 每次改成實際帳號</span>
+Get-ADUser -Identity $Login -Properties DisplayName, Mail, Enabled,
+    EmployeeID, Department, SID |
+  Select-Object SamAccountName, DisplayName, Mail, Enabled,
+    EmployeeID, Department, SID</pre></div>
+    <div class="warn" style="margin-top:12px"><span class="note-k">重要</span><code>$Login</code> 必須改成這次新增或異動的 AD 登入帳號；<code>&lt;AD 系統編號&gt;</code> 則沿用 Ragic 資訊系統主檔既有編號，除非主檔本身已重建。</div>
+  </section>
+
+  <section class="sec" id="s4">
+    <div class="sh"><span class="n">04</span><h2>AD 群組與成員匯出</h2></div>
+    <h3 class="sub3" style="margin-top:6px">4.1 群組主檔</h3>
+<div class="code"><span class="lang">POWERSHELL</span><pre>Get-ADGroup -Filter * -Properties GroupCategory, GroupScope, SID |
+  ForEach-Object {
+    [pscustomobject]@{
+      '所屬資訊系統' = $SystemId
+      '群組名稱'     = $_.Name
+      '群組類型'     = $_.GroupCategory
+      '群組範圍'     = $_.GroupScope
+      '群組SID'      = $_.SID.Value
+      '同步鍵'       = "$SystemId|$($_.SID.Value)"
+    }
+  } |
+  Export-Csv -Path "$ExportDir\AD_Groups.csv" -NoTypeInformation -Encoding UTF8</pre></div>
+
+    <h3 class="sub3">4.2 直接成員關聯</h3>
+<div class="code"><span class="lang">POWERSHELL</span><pre>$Rows = foreach ($Group in Get-ADGroup -Filter *) {
+  Get-ADGroupMember -Identity $Group -ErrorAction SilentlyContinue |
+    Where-Object objectClass -eq 'user' |
+    ForEach-Object {
+      $User = Get-ADUser -Identity $_ -Properties SID
+      [pscustomobject]@{
+        '帳號同步鍵' = "AD|$($User.SID.Value)"
+        '群組同步鍵' = "$SystemId|$($Group.SID.Value)"
+        '成員關聯鍵' = "AD|$($User.SID.Value)|$($Group.SID.Value)"
+        '資料來源'   = 'Active Directory 匯出'
+      }
+    }
+}
+$Rows | Export-Csv -Path "$ExportDir\AD_GroupMembers.csv" -NoTypeInformation -Encoding UTF8</pre></div>
+
+    <h3 class="sub3">4.3 匯出後驗證</h3>
+<div class="code"><span class="lang">POWERSHELL</span><pre>$A = Import-Csv "$ExportDir\AD_Accounts.csv"
+$G = Import-Csv "$ExportDir\AD_Groups.csv"
+$M = Import-Csv "$ExportDir\AD_GroupMembers.csv"
+"Accounts=$($A.Count); Groups=$($G.Count); Members=$($M.Count)"
+
+<span class="c"># 有輸出代表鍵值重複，需先排除再匯入</span>
+$A | Group-Object -Property '同步鍵'     | Where-Object Count -gt 1
+$G | Group-Object -Property '同步鍵'     | Where-Object Count -gt 1
+$M | Group-Object -Property '成員關聯鍵' | Where-Object Count -gt 1</pre></div>
+    <div class="callout" style="margin-top:12px"><b>範圍說明</b>　此範例匯出直接群組成員。若稽核需求包含巢狀群組的有效權限，應另行計算遞迴成員，並在欄位中明確區分「直接」與「繼承」。成員數很多的群組，<code>Get-ADGroupMember</code> 可能受伺服器筆數上限影響，可改讀群組的 <code>Members</code> 屬性。</div>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="sh"><span class="n">05</span><h2>Synology NAS 匯出（SSH）</h2></div>
+    <div class="warn"><span class="note-k">使用方式</span>以核准的管理方式登入 NAS，將輸出寫入受控匯出路徑；不在指令、批次檔或文件中保存密碼。不同 DSM 版本與權限模式可能需調整 synoacltool 路徑或參數。</div>
+
+    <h3 class="sub3">5.1 設定本次參數</h3>
+<div class="code"><span class="lang">SHELL</span><pre>NAS_NAME="&lt;NAS 主機名稱&gt;"
+EXPORT_DIR="&lt;受控輸出路徑&gt;"
+STAMP="$(date +%Y%m%d_%H%M%S)"
+OUT="$EXPORT_DIR/${STAMP}_${NAS_NAME}"
+mkdir -p "$OUT"
+hostname
+date</pre></div>
+
+    <h3 class="sub3">5.2 匯出本機帳號、群組與群組成員</h3>
+<div class="code"><span class="lang">SHELL</span><pre>getent passwd &gt; "$OUT/accounts.txt"
+getent group  &gt; "$OUT/groups.txt"
+
+getent group | awk -F: -v nas="$NAS_NAME" '
+BEGIN { OFS = "\t"; print "NAS", "Group", "Member" }
+{
+  n = split($4, a, ",")
+  for (i = 1; i &lt;= n; i++) if (a[i] != "") print nas, $1, a[i]
+}' &gt; "$OUT/group_members.tsv"</pre></div>
+
+    <h3 class="sub3">5.3 匯出共享資料夾根層 ACL</h3>
+<div class="code"><span class="lang">SHELL</span><pre>for SHARE in /volume*/*; do
+  [ -d "$SHARE" ] || continue
+  case "$(basename "$SHARE")" in
+    @*|\#*) continue ;;   <span class="c"># 排除 @appstore、#recycle 等系統目錄</span>
+  esac
+  echo "### SHARE=$SHARE"
+  synoacltool -get "$SHARE" 2&gt;&amp;1
+done &gt; "$OUT/root_acl.txt"</pre></div>
+
+    <h3 class="sub3">5.4 驗證</h3>
+<div class="code"><span class="lang">SHELL</span><pre>wc -l "$OUT/accounts.txt" "$OUT/groups.txt" \
+      "$OUT/group_members.tsv" "$OUT/root_acl.txt"
+head -n 5 "$OUT/group_members.tsv"
+grep -c '^### SHARE=' "$OUT/root_acl.txt"</pre></div>
+    <div class="callout" style="margin-top:12px"><b>解析原則</b>　NAS 同名帳號不可只用 Login 配對，應加入所屬資訊系統編號。ACL 的 allow／deny、讀寫／唯讀及群組／使用者類型必須分欄，不能只保留一段文字。</div>
+  </section>
+
+  <section class="sec" id="s6">
+    <div class="sh"><span class="n">06</span><h2>Ragic 匯入與關聯更新</h2></div>
+    <div class="grid g2" style="align-items:start">
+      <div>
+        <h3 class="sub3" style="margin-top:0">6.1 匯入前檢查</h3>
+        <div class="scroll"><table class="kv">
+          <thead><tr><th>檢查點</th><th>合格條件</th></tr></thead>
+          <tbody>
+            <tr><td>原始檔</td><td>已唯讀保存，工作檔另存；編碼可正確顯示中文</td></tr>
+            <tr><td>識別鍵</td><td>無空白、無非預期重複，系統編號已存在</td></tr>
+            <tr><td>連結目標</td><td>USR、SYS、ACC、GRP 等主檔已先建立</td></tr>
+            <tr><td>狀態值</td><td>符合 Ragic 選項，例如啟用／已停用、有效／已移除</td></tr>
+            <tr><td>備份</td><td>已匯出匯入前清冊並記錄基準筆數</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <h3 class="sub3" style="margin-top:0">6.2 建議匯入順序</h3>
+        <div class="scroll"><table class="kv">
+          <thead><tr><th>順序</th><th>表單與動作</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>資訊系統主檔（SYS）：人工建立並維持固定編號</td></tr>
+            <tr><td>2</td><td>人員帳號總覽（USR）：先確認在職人員與員工編號</td></tr>
+            <tr><td>3</td><td>系統帳號清冊（ACC）：以同步鍵更新；新增帳號再配對人員</td></tr>
+            <tr><td>4</td><td>帳號群組清冊（GRP）：以系統＋SID／GID 更新</td></tr>
+            <tr><td>5</td><td>成員關聯表（MEM）：待 ACC 與 GRP 均存在後匯入</td></tr>
+            <tr><td>6</td><td>NAS 資料夾（FOLDER）與權限（PERM）：最後匯入 ACL</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <h3 class="sub3">6.3 匯入模式與後續動作</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>情境</th><th>匯入策略</th><th>完成後</th></tr></thead>
+      <tbody>
+        <tr><td>初次建立</td><td>產生新資料</td><td>核對新增筆數與連結成功率</td></tr>
+        <tr><td>定期同步</td><td>更新舊資料；找不到鍵時才新增</td><td>執行連結載入、公式套用與參照刷新</td></tr>
+        <tr><td>只處理離職／停用</td><td>以穩定鍵更新狀態，不刪歷史</td><td>確認來源平台已停用並保留日期</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn" style="margin-top:14px"><span class="note-k">為何要套用公式</span>CSV 匯入會寫入欄位，但不一定立即重算既有資料的公式或反向參照。MEM 的「系統一致性」及人員頁面的群組子表，應在匯入後執行公式套用／連結更新，再進行驗證。</div>
+  </section>
+
+  <section class="sec" id="s7">
+    <div class="sh"><span class="n">07</span><h2>驗證、例外處理與稽核證據</h2></div>
+    <h3 class="sub3" style="margin-top:6px">7.1 最小驗證清單</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>層級</th><th>抽查內容</th><th>通過標準</th></tr></thead>
+      <tbody>
+        <tr><td>筆數</td><td>匯出、整理、匯入前後筆數</td><td>差異可說明且有異常清單</td></tr>
+        <tr><td>帳號</td><td>來源狀態、登入帳號、系統及持有人</td><td>與來源平台一致</td></tr>
+        <tr><td>群組</td><td class="mono">ACC → MEM → GRP → SYS</td><td>鏈路完整且系統一致</td></tr>
+        <tr><td>NAS 權限</td><td>PERM → FOLDER → SYS 與授權對象</td><td>權限等級及對象一致</td></tr>
+        <tr><td>人員頁面</td><td>持有帳號與所屬群組參照子表</td><td>新增、停用與移除均可追溯</td></tr>
+      </tbody>
+    </table></div>
+    <h3 class="sub3">7.2 常見異常與處理</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>現象</th><th>可能原因</th><th>處理</th></tr></thead>
+      <tbody>
+        <tr><td>系統一致性顯示不一致</td><td>ACC 與 GRP 的系統編號不同，或公式未重算</td><td>先核對來源鍵，再套用公式到全部資料</td></tr>
+        <tr><td>人員頁面沒有群組子表資料</td><td>MEM 未匯入、關聯鍵未更新或參照尚未刷新</td><td>更新 MEM 關聯鍵並執行連結／參照更新</td></tr>
+        <tr><td>同名帳號配錯人</td><td>只用 Login／姓名比對</td><td>改用 SYS＋Login、SID 及員工編號交叉確認</td></tr>
+        <tr><td>離職人員仍有權限</td><td>只改 Ragic，未停用來源平台</td><td>先完成 AD／NAS／郵件停權，再匯出驗證</td></tr>
+      </tbody>
+    </table></div>
+    <h3 class="sub3">7.3 建議保存證據</h3>
+    <div class="grid g2">
+      <div class="card soft"><p>原始匯出檔、整理後匯入檔及檔案雜湊／版本日期。</p></div>
+      <div class="card soft"><p>執行人、執行時間、資料範圍、指令版本與來源平台版本。</p></div>
+      <div class="card soft"><p>匯入模式、鍵值欄位、成功／失敗筆數與錯誤清單。</p></div>
+      <div class="card soft"><p>抽查樣本、覆核人、結論及待改善事項。</p></div>
+    </div>
+    <div class="dark" style="margin-top:20px">
+      <h3>對應 ISO/IEC 27001:2022</h3>
+      <div class="cols">
+        <div><b>A.5.37 書面化作業程序</b><span>七步流程、匯入順序與驗證清單皆已文件化，可交接執行</span></div>
+        <div><b>A.5.18 存取權限</b><span>定期匯出與差異核對，支援權限複審與離職回收</span></div>
+        <div><b>7.5 文件化資訊</b><span>保存原始檔、雜湊、執行人與抽查紀錄作為證據</span></div>
+      </div>
+      <p style="font-size:13px;color:#aebfd0;margin-top:12px">僅為設計對照，不代表已通過驗證。</p>
+    </div>
+  </section>
+
+  <footer class="end">
+    <div class="row"><span>組織名稱、帳號、設備、網域、路徑與內部編號均已泛化。</span><span>陳家榮｜IT維運與系統管理</span></div>
+    <div class="next"><a href="ragic.html">← 回到：多系統帳號、權限與資產關聯管理系統</a><a href="isms.html">ISMS 與帳號權限管理整合實例 →</a><a href="../">回作品集</a></div>
+  </footer>
+</main>
+</body>
+</html>
