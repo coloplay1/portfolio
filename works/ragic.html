@@ -14,7 +14,7 @@
 <body>
 <nav class="bar"><div class="wrap">
   <a class="back" href="../">← 作品集</a>
-  <a class="pdf" href="../ragic-account-system.pdf" download>下載 PDF</a>
+  <a class="pdf" href="../ragic-account-system.pdf?v=20261029" download>下載 PDF</a>
 </div></nav>
 
 <header class="hero">
@@ -27,7 +27,7 @@
     <p style="margin-top:28px;color:#cfdbe7;font-size:14px">核心價值</p>
     <p style="font-size:22px;letter-spacing:.06em">可追溯 · 可交接 · 可盤點 · 可稽核</p>
     <div class="toc">
-      <a href="#s2">製作事由</a><a href="#s3">關聯架構</a><a href="#s4">系統與設備</a><a href="#s5">人員彙總</a><a href="#s6">NAS 權限</a><a href="#s7">成員關聯</a><a href="#s8">Ragic 設計</a><a href="#s9">稽核應用</a><a href="#s10">擴充藍圖</a><a href="ops.html" style="background:rgba(232,139,58,.35)">附件：維護手冊</a>
+      <a href="#s2">製作事由</a><a href="#s3">關聯架構</a><a href="#s4">系統與設備</a><a href="#s5">人員彙總</a><a href="#s6">NAS 權限</a><a href="#s7">成員關聯</a><a href="#s8">Ragic 設計</a><a href="#s9">稽核應用</a><a href="#s10">擴充藍圖</a><a href="#s11">首次盤點</a><a href="ops.html" style="background:rgba(232,139,58,.35)">附件：維護手冊</a>
     </div>
   </div>
 </header>
@@ -44,7 +44,7 @@
       <div class="card soft"><div class="k"><i>03</i><h3>交接困難</h3></div><p>系統、承載設備、維護廠商與窗口資訊分散，仰賴個人記憶。</p>
         <div class="fix"><b>對應做法</b>系統主檔串接設備、廠商與聯絡窗口，異常或交接時可直接找到負責對象。</div></div>
     </div>
-    <div class="callout" style="margin-top:20px;border-left-width:6px"><b style="color:var(--teal-d)">實際成效　</b>系統已上線，用於日常帳號管理。人員到職或離職時，只要開啟該人員頁面，即可一次看到跨 5 個系統（AD、三台 NAS、郵件）的持有帳號、所屬群組與資料夾權限，依清單逐項處理後同步更新紀錄，異動時不再遺漏。</div>
+    <div class="callout" style="margin-top:20px;border-left-width:6px"><b style="color:var(--teal-d)">實際成效　</b>系統已上線，用於日常帳號管理，並已據此完成 AD 與三台 NAS 的首次全面盤點（見第 11 節）。人員到職或離職時，開啟該人員頁面即可一次看到跨 5 個系統的持有帳號、所屬群組與資料夾權限，依清單逐項處理，異動時不再遺漏。</div>
     <div class="dark" style="margin-top:20px">
       <h3>建置目標</h3>
       <ul style="grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));column-gap:28px">
@@ -166,6 +166,8 @@
         <li>連結鍵優先使用穩定編號（USR／ACC／SYS／FOLDER），不要用姓名</li>
         <li>匯入更新時，第一欄必須是可比對的 Key</li>
         <li>改動連結後需重新儲存或批次更新舊資料，既有載入值不一定自行回填</li>
+        <li>新增與更新分成不同匯入檔：有對應的空白欄位會覆蓋既有資料</li>
+        <li>匯入前先備份，並以少量資料試匯確認欄位對應</li>
       </ol>
     </div>
   </section>
@@ -201,7 +203,7 @@
     <div class="grid g4">
       <div class="card soft"><div class="k"><i>01</i><h3>Microsoft 365 帳號</h3></div><p>納入 Exchange、Teams、OneDrive，並管理群組與授權方案。</p></div>
       <div class="card soft"><div class="k"><i>02</i><h3>人資異動申請</h3></div><p>到職、轉調、留停與離職由人資發起，通知 IT 辦理。</p></div>
-      <div class="card soft"><div class="k"><i>03</i><h3>權限調整報表</h3></div><p>由人員帳號產生應新增、應移除與待確認的權限清單。</p></div>
+      <div class="card soft"><div class="k"><i>03</i><h3>權限調整報表</h3></div><p>由人員帳號產生應新增、應移除與待確認的權限清單。<b style="color:var(--teal-d);font-weight:500">平台與清冊的差異比對已完成初版。</b></p></div>
       <div class="card soft"><div class="k"><i>04</i><h3>通知與稽核軌跡</h3></div><p>保留申請、核准、執行、覆核日期與處理人，逾期自動提醒。</p></div>
     </div>
     <h3 style="margin-top:26px">跨部門權限異動流程</h3>
@@ -216,9 +218,38 @@
       <div class="cols">
         <div><b>Phase 1｜帳號範圍</b><span>建立 Microsoft 365 系統主檔、帳號類型、授權方案與群組關聯。</span></div>
         <div><b>Phase 2｜流程串接</b><span>新增人資申請單、主管核准、IT 工作清單與完成通知。</span></div>
-        <div><b>Phase 3｜自動化治理</b><span>產生權限差異報表、逾期提醒、定期覆核與稽核儀表板。</span></div>
+        <div><b>Phase 3｜自動化治理</b><span>產生權限差異報表、逾期提醒、定期覆核與稽核儀表板。差異比對工具已先完成（第 11 節）。</span></div>
       </div>
       <p style="font-size:13.5px;color:#aebfd0;margin-top:14px">原則：系統仍不保存密碼或 Token；若未來串接 API，憑證應置於專用秘密管理工具。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s11">
+    <div class="sh"><span class="n">11</span><h2>首次全面盤點與自動化比對</h2></div>
+    <p class="sub">把一次性的人工比對，變成每次都能重跑的檢查。</p>
+    <div class="grid g4">
+      <div class="card soft"><div class="k"><i>4</i><h3>個平台</h3></div><p>AD 與三台 NAS，各自以腳本或管理介面匯出。</p></div>
+      <div class="card soft"><div class="k"><i>500+</i><h3>帳號</h3></div><p>逐筆比對啟用狀態、持有人與同步鍵。</p></div>
+      <div class="card soft"><div class="k"><i>900+</i><h3>關聯</h3></div><p>帳號與群組的成員關係，含特權群組。</p></div>
+      <div class="card soft"><div class="k"><i>6</i><h3>類異常</h3></div><p>回平台修正並更新清冊，過程寫成結案紀錄。</p></div>
+    </div>
+    <h3 style="margin-top:26px">盤點流程</h3>
+    <style>#s11 .chain .node{flex-basis:140px}#s11 .chain .arr{flex-basis:34px}</style>
+    <div class="chain">
+      <div class="node"><b>平台匯出</b><span>PowerShell／SSH 腳本／DSM，只讀取不修改</span><code>STEP 1</code></div><div class="arr"></div>
+      <div class="node"><b>差異比對</b><span>本機瀏覽器執行，資料不離開電腦</span><code>STEP 2</code></div><div class="arr"></div>
+      <div class="node"><b>先修平台</b><span>高風險項目回 AD／NAS 處理</span><code>STEP 3</code></div><div class="arr"></div>
+      <div class="node"><b>分檔匯入</b><span>帳號新增／狀態／成員新增／成員移除</span><code>STEP 4</code></div><div class="arr"></div>
+      <div class="node"><b>重跑確認</b><span>差異歸零，截圖留存為稽核證據</span><code>STEP 5</code></div>
+    </div>
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card soft"><h3>盤點發現的異常類型</h3><ul style="padding-left:18px;color:var(--muted);display:grid;gap:4px;margin-top:8px"><li>離職人員帳號未停用</li><li>停用帳號仍在特權群組</li><li>清冊與實際狀態不符</li><li>平台帳號未登錄清冊</li><li>同一帳號重複建檔</li><li>帳號連結到錯誤人員</li></ul><p style="margin-top:8px">經驗回寫到維護手冊，成為下次盤點的檢查項目。</p></div>
+      <div class="card soft"><h3>比對工具的防呆設計</h3><ul style="padding-left:18px;color:var(--muted);display:grid;gap:4px;margin-top:8px"><li>自動辨識檔案種類與來源主機，放錯檔案即提示</li><li>只有確定是同一人時才自動連結人員，避免誤連擴散</li><li>主要群組、套件服務帳號等平台特性不誤判為差異</li></ul></div>
+    </div>
+    <div class="dark" style="margin-top:20px">
+      <h3>盤點心得</h3>
+      <p style="color:#e3ebf3;font-size:15px">差異大多來自「同一個人在不同平台各有一份身分」。工具能縮短比對時間，但根本解法是收斂身分來源：規劃讓仍使用本機帳號的 NAS 加入網域，逐步改由 AD 統一管理。</p>
+      <p style="font-size:13.5px;color:#aebfd0;margin-top:10px">比對工具：需求、比對規則與驗收由本人負責，程式由 AI（Claude）協作產出。數量為概數。</p>
     </div>
   </section>
 

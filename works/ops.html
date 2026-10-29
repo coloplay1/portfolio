@@ -68,7 +68,7 @@ ol.flow li::before{content:counter(f);display:inline-grid;place-items:center;wid
     <div class="eb">維護工作流程手冊｜節錄版</div>
     <h1>IT 帳號與權限管理系統 維護流程</h1>
     <p class="lede">AD・Synology NAS・郵件平台・Ragic 關聯資料維護</p>
-    <p class="who">陳家榮｜IT維運與系統管理　·　版本 1.1　·　2026-10-25</p>
+    <p class="who">陳家榮｜IT維運與系統管理　·　版本 1.2　·　2026-10-29</p>
     <div class="tags"><span style="background:var(--blue)">PowerShell</span><span style="background:var(--teal-d)">SSH / Synology DSM</span><span style="background:var(--orange)">ISO 27001 A.5.37 書面化作業程序</span></div>
     <div class="toc">
       <a href="#s1">範圍與原則</a><a href="#s2">表單與關聯鍵</a><a href="#s3">AD 帳號匯出</a><a href="#s4">AD 群組與成員</a><a href="#s5">NAS 匯出</a><a href="#s6">Ragic 匯入</a><a href="#s7">驗證與證據</a>
@@ -287,6 +287,17 @@ done &gt; "$OUT/root_acl.txt"</pre></div>
 head -n 5 "$OUT/group_members.tsv"
 grep -c '^### SHARE=' "$OUT/root_acl.txt"</pre></div>
     <div class="callout" style="margin-top:12px"><b>解析原則</b>　NAS 同名帳號不可只用 Login 配對，應加入所屬資訊系統編號。ACL 的 allow／deny、讀寫／唯讀及群組／使用者類型必須分欄，不能只保留一段文字。</div>
+
+    <h3 class="sub3">5.5 首次盤點後的實務補充</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>情況</th><th>處理方式</th></tr></thead>
+      <tbody>
+        <tr><td>需要帳號啟用狀態</td><td>以 <code>synouser --get</code> 逐一讀取；此指令需 root 權限，腳本開頭先檢查，未取得權限即停止，避免產生整份「Permission denied」的無效檔案</td></tr>
+        <tr><td>NAS 未開放 SSH</td><td>改由 DSM 管理介面匯出使用者清單，比對帳號狀態與群組；資料夾 ACL 另以權限畫面佐證</td></tr>
+        <tr><td>套件服務帳號</td><td>家目錄位於套件路徑的帳號屬系統服務，保留於來源檔但不納入人員帳號盤點</td></tr>
+        <tr><td>腳本部署</td><td>腳本只讀取資料；無法以檔案總管放置時，可在 SSH 以 here-document 直接建立</td></tr>
+      </tbody>
+    </table></div>
   </section>
 
   <section class="sec" id="s6">
@@ -329,6 +340,18 @@ grep -c '^### SHARE=' "$OUT/root_acl.txt"</pre></div>
         <tr><td>只處理離職／停用</td><td>以穩定鍵更新狀態，不刪歷史</td><td>確認來源平台已停用並保留日期</td></tr>
       </tbody>
     </table></div>
+    <h3 class="sub3">6.4 首次盤點後補充的匯入規則</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>規則</th><th>原因</th></tr></thead>
+      <tbody>
+        <tr><td>CSV 第一欄必須是每筆唯一的鍵（帳號用同步鍵、成員用 ACC｜GRP）</td><td>平台以第一欄比對；若第一欄每筆相同，所有資料會被當成同一筆而互相覆蓋</td></tr>
+        <tr><td>新增與更新分成不同匯入檔：帳號新增、帳號狀態、成員新增、成員移除</td><td>有對應的空白欄位會清空既有資料，例如人員連結</td></tr>
+        <tr><td>匯入時執行連結與載入；只修正文字欄位時例外</td><td>未執行時載入欄位為空白；修正文字時執行載入反而會被帶回舊值</td></tr>
+        <tr><td>修正連錯的人員，從帳號端處理，並直接匯入要改的值</td><td>人員頁子表為自動彙總無法直接改；連結值未變時重新匯入不會觸發載入</td></tr>
+        <tr><td>匯入前檢查同步鍵是否重複，先處理再匯入</td><td>重複鍵會讓更新落到其中任一筆，結果無法預期</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout" style="margin-top:12px"><b>差異比對</b>　平台匯出檔與清冊匯出檔放入本機執行的比對工具，自動產生差異清單與上述四種匯入檔；修正與匯入後重跑，差異歸零即作為完成證據。</div>
     <div class="warn" style="margin-top:14px"><span class="note-k">為何要套用公式</span>CSV 匯入會寫入欄位，但不一定立即重算既有資料的公式或反向參照。MEM 的「系統一致性」及人員頁面的群組子表，應在匯入後執行公式套用／連結更新，再進行驗證。</div>
   </section>
 
